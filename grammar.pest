@@ -1,0 +1,16 @@
+operation = _{ and | or | nor }
+    and      = { "&&" }
+    or       = { "||" }
+    nor      = { "^" }
+
+variable = { ASCII_ALPHA }
+
+unary_negate = { "!" }
+atom = _{ unary_negate? ~ variable }
+
+expr = { term ~ (operation ~ term)* }
+term = _{ atom | "(" ~ expr ~ ")" }
+
+calculation = _{ SOI ~ expr ~ EOI }
+
+WHITESPACE = _{ " " | "\t" }
